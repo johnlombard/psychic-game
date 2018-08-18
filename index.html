@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>What letter am I guessing?</title>
+
+</head>
+
+<body>
+
+  <h1> The Psychic Game</h1>
+
+  <p>Guess what letter I'm thinking of!</p>
+
+  <div id="wins">
+    <p>Wins:</p>
+  </div>
+
+  <div id="losses">
+    <p>Losses:</p>
+  </div>
+
+  <div id="guesses">
+    <p>Guesses Left: </p>
+  </div>
+
+  <div id="lettersGuessed">
+    <p>Your guesses so far:</p>
+  </div>
+
+
+
+
+
+  <script type="text/javascript">
+    // computer selects random letter
+    // user imports guesses through pressing a key
+    // if number of guesses remaning is below 0 you lose
+    // if you guess the same letter you win
+
+
+    
+var wins = 0;
+var losses = 0;
+var guesses = 10;
+var lettersGuessed = [];
+var letters = "abcdefghijklmnopqrstuvwxyz"
+
+//generates randomly selected letter
+
+compLetter = letters[Math.floor(Math.random() * letters.length)];
+console.log(compLetter);
+
+
+
+
+//resets game after win or lose
+function reset() {
+      guesses = 10;
+      lettersGuessed = [];
+      compLetter = letters[Math.floor(Math.random() * letters.length)];
+     
+    }
+
+
+
+document.onkeydown = function(event) {
+  var userLetter = event.key;
+  //keydowns only be letters
+  var isLetter = (event.keyCode >= 65 && event.keyCode <= 90);
+  //prevent repeated guesses
+  var isRepeat = lettersGuessed.includes(userLetter);
+  
+
+    //if the key input is a key and not repeated add it to the array
+if (isLetter && !isRepeat) { 
+  lettersGuessed.push(userLetter);
+  var isRepeat = lettersGuessed.includes(userLetter);
+
+  //correct guess
+  if (userLetter === compLetter) {
+    wins++;
+    reset();
+  }
+
+  //wrong guess
+  else {
+    guesses--;
+    if (guesses === 0) {
+      losses++;
+     reset();f
+    }
+  }
+} else {
+  lettersGuessed.pull(userLetter);
+}
+  console.log("Array" + lettersGuessed);
+  console.log(wins);
+  console.log(losses);
+
+  console.log(guesses);
+
+  //change the html
+  document.getElementById('wins').innerHTML = ("Wins: " + wins);
+  document.getElementById('losses').innerHTML = ("Losses: " + losses);
+  document.getElementById('guesses').innerHTML = ("Remaining guesses: " + guesses);
+  document.getElementById('lettersGuessed').innerHTML = ("Your guesses so far: " + lettersGuessed);
+
+
+}
+
+
+
+
+    
+
+
+  </script>
+</body>
+
+</html>
